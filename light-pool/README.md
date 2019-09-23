@@ -19,11 +19,15 @@ func main() {
 		workNum  = 10
 		urlCount = 100
 	)
-	p = pool.NewPool(workNum)
+  // 初始化 pool
+	p = pool.New(workNum)
 	for i := 0; i < urlCount; i++ {
+    // 推送任务
 		p.Push(request(i))
 	}
+  // 运行
 	p.Run()
+  // 程序运行时长
 	costTime := time.Since(startTime)
 	fmt.Printf("程序耗时共 %f 秒", costTime.Seconds())
 }

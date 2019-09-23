@@ -14,7 +14,7 @@ func TestNewPool(t *testing.T) {
 		workNum  = 10
 		urlCount = 100
 	)
-	p = NewPool(workNum)
+	p = New(workNum)
 	for i := 0; i < urlCount; i++ {
 		p.Push(request(i))
 	}
@@ -28,4 +28,3 @@ func request(i int) func() {
 		fmt.Println("finish request, url num is:", i)
 	}
 }
-

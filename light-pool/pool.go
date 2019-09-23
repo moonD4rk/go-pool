@@ -11,7 +11,7 @@ type Pool struct {
 	fns     chan func()
 }
 
-func NewPool(workNum int) *Pool {
+func New(workNum int) *Pool {
 	p := &Pool{
 		workNum: workNum,
 		wg:      sync.WaitGroup{},
