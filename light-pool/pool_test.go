@@ -6,25 +6,29 @@ import (
 	"time"
 )
 
-// 模拟 10 个线程同时发送请求
-// 总共为 100 个 url 任务
+// TestNewPool，测试 Pool 功能
 func TestNewPool(t *testing.T) {
 	var (
-		p        *Pool
-		workNum  = 10
-		urlCount = 100
+		workNum = 10
+		jobNum  = 100
 	)
-	p = New(workNum)
-	for i := 0; i < urlCount; i++ {
-		p.Push(request(i))
-	}
+	p := New(workNum, request)
+
+	go func() {
+		for i := 0; i < jobNum; i++ {
+			p.Push(i)
+		}
+		p.Close()
+	}()
+
 	p.Run()
 }
 
-// 模拟发送请求过程
-func request(i int) func() {
-	return func() {
-		time.Sleep(time.Second * 1)
-		fmt.Println("finish request, url num is:", i)
-	}
+func request(i interface{}) {
+	time.Sleep(time.Second * 1)
+	fmt.Println("finish request, url num is:", i.(int))
+}
+
+func main()  {
+
 }

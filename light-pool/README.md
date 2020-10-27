@@ -9,37 +9,30 @@ import (
 	"fmt"
 	"time"
 
-	pool "github.com/darkMoon1973/go-pool/light-pool"
+	pool "github.com/moonD4rk/go-pool/light-pool"
 )
 
 func main() {
-	startTime := time.Now()
 	var (
-		p        *pool.Pool
-		workNum  = 10
-		urlCount = 100
+		workNum = 10
+		jobNum  = 100
 	)
-  // 初始化 pool
-	p = pool.New(workNum)
-	for i := 0; i < urlCount; i++ {
-    // 推送任务
-		p.Push(request(i))
-	}
-  // 运行
+	p := pool.New(workNum, request)
+
+	go func() {
+		for i := 0; i < jobNum; i++ {
+			p.Push(i)
+		}
+		p.Close()
+	}()
+
 	p.Run()
-  // 程序运行时长
-	costTime := time.Since(startTime)
-	fmt.Printf("程序耗时共 %f 秒", costTime.Seconds())
 }
 
-// 模拟发送请求过程
-func request(i int) func() {
-	return func() {
-		time.Sleep(time.Second * 1)
-		fmt.Println("finish request, url num is:", i)
-	}
+func request(i interface{}) {
+	time.Sleep(time.Second * 1)
+	fmt.Println("finish request, url num is:", i.(int))
 }
-
 ```
 输出
 
