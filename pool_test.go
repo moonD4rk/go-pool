@@ -28,7 +28,3 @@ func request(i interface{}) {
 	time.Sleep(time.Second * 1)
 	fmt.Println("finish request, url num is:", i.(int))
 }
-
-func main()  {
-
-}
