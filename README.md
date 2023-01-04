@@ -1,6 +1,6 @@
 # Golang 线程池
 
-使用 Go 来实现线程池
+此项目只是用来学习 Golang 并发的小项目，想要更完备的线程池可以使用 [conc](https://github.com/sourcegraph/conc)。
 
 ## 轻量级的线程池
 
